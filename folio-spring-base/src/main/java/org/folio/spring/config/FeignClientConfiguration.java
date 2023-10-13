@@ -4,6 +4,8 @@ import feign.Client;
 import feign.Logger;
 import org.folio.spring.FolioExecutionContext;
 import org.folio.spring.client.EnrichUrlAndHeadersClient;
+import org.folio.spring.service.SystemUserProperties;
+import org.folio.spring.service.SystemUserService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,8 +20,9 @@ import org.springframework.context.annotation.Configuration;
 public class FeignClientConfiguration {
   @Bean
   public Client enrichUrlAndHeadersClient(@Autowired FolioExecutionContext folioExecutionContext,
-    @Autowired okhttp3.OkHttpClient okHttpClient) {
-    return new EnrichUrlAndHeadersClient(folioExecutionContext, okHttpClient);
+    @Autowired okhttp3.OkHttpClient okHttpClient, @Autowired SystemUserProperties systemUserProperties,
+    @Autowired SystemUserService systemUserService) {
+    return new EnrichUrlAndHeadersClient(folioExecutionContext, okHttpClient, systemUserProperties, systemUserService);
   }
 
   @Bean
